@@ -35,5 +35,20 @@ class AuthServiceProvider extends ServiceProvider
                 return User::where('api_token', $request->input('api_token'))->first();
             }
         });
+
+        /*
+         * The viaRequest method accepts a Closure which will be called when
+         * the incoming request needs to be authenticated. If no authenticated user
+         * can be found for the request, the Closure should return null.
+         *
+         */
+
+        $this->app['auth']->viaRequest(
+            'web',
+            function ($request) {
+                $user = new Illuminate\Auth\GenericUser(['id' => 1, 'name' => 'User']);
+                return $user;
+            }
+        );
     }
 }

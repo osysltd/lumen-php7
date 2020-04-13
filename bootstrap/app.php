@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname(__DIR__)
@@ -23,9 +23,9 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+$app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +60,8 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('session');
+$app->configure('auth');
 
 /*
 |--------------------------------------------------------------------------
@@ -76,18 +78,18 @@ $app->configure('app');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
-| Session for Lumen
+| Session Support
 |--------------------------------------------------------------------------
 */
 
 $app->middleware([
-    \Illuminate\Session\Middleware\StartSession::class,
+    Illuminate\Session\Middleware\StartSession::class,
 ]);
 
 $app->singleton(Illuminate\Session\SessionManager::class, function () use ($app) {
@@ -97,6 +99,28 @@ $app->singleton(Illuminate\Session\SessionManager::class, function () use ($app)
 $app->singleton('session.store', function () use ($app) {
     return $app->loadComponent('session', Illuminate\Session\SessionServiceProvider::class, 'session.store');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Cookies and CSRF Support
+|--------------------------------------------------------------------------
+*/
+
+$app->singleton('cookie', function () use ($app) {
+    return $app->loadComponent('session', 'Illuminate\Cookie\CookieServiceProvider', 'cookie');
+});
+
+$app->bind('Illuminate\Contracts\Cookie\QueueingFactory', 'cookie');
+
+$app->middleware([
+    Illuminate\Cookie\Middleware\EncryptCookies::class,
+    Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    Illuminate\Session\Middleware\StartSession::class,
+    Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    App\Http\Middleware\VerifyCsrfToken::class,
+]);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -110,7 +134,7 @@ $app->singleton('session.store', function () use ($app) {
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*
@@ -127,7 +151,7 @@ $app->singleton('session.store', function () use ($app) {
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__ . '/../routes/web.php';
 });
 
 return $app;

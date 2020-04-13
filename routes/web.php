@@ -29,3 +29,44 @@ $router->get('/test/session-get', function (\Illuminate\Http\Request $request) {
         'session.name' => $request->session()->get('name'),
     ]);
 });
+
+$router->get('/test/cookie-set', function () {
+    $response = new Illuminate\Http\Response('Cookie name: name-of-cookie');
+    $response->withCookie(new Symfony\Component\HttpFoundation\Cookie(
+        'name-of-cookie',
+        'value-of-cookie',
+        '2147483647'
+    ));
+    return $response;
+});
+
+$router->get('/test/cookie-get', function (\Illuminate\Http\Request $request) {
+    dd($request->cookie('name-of-cookie'));
+});
+
+$router->get('/test/csrf', function (\Illuminate\Http\Request $request) {
+    return response()->json([
+        'csrf_token' => $request->session()->get('_token'),
+    ]);
+});
+
+$router->get('/test/user-login', function (\Illuminate\Http\Request $request) {
+    $user = new Illuminate\Auth\GenericUser(['id' => 1, 'name' => 'User']);
+   Auth::login($user);
+    if (Auth::check()) {
+        return 'User has been authenticated';
+    }
+});
+
+$router->get('/test/user-check', function (\Illuminate\Http\Request $request) {
+    if (Auth::check()) {
+        return 'SQL exception expected if the user id has been resolved from session';
+    }
+});
+
+$router->get('/test/user-midware', ['middleware' => 'auth', function (Request $request, $id) {
+    $user = new Illuminate\Auth\GenericUser(['id' => 1, 'name' => 'User']);
+    Auth::login($user);
+    $user = Auth::user();
+    return 'SQL exception expected if the user id has been resolved from session';
+}]);
