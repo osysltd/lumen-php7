@@ -16,3 +16,16 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('/test/session-put', function (\Illuminate\Http\Request $request) {
+    $request->session()->put('name', config('app.name'));
+    return response()->json([
+        'session.name' => $request->session()->get('name')
+    ]);
+});
+
+$router->get('/test/session-get', function (\Illuminate\Http\Request $request) {
+    return response()->json([
+        'session.name' => $request->session()->get('name'),
+    ]);
+});
