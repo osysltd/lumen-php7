@@ -108,6 +108,7 @@ class_alias(Illuminate\Support\Facades\Request::class, 'Request');
 /*
 |--------------------------------------------------------------------------
 | Cookies and CSRF Support
+| CSRF: <input type="hidden" name="_token" value="{{ Session::token() }}" />
 |--------------------------------------------------------------------------
 */
 
