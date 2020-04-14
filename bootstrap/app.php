@@ -103,6 +103,7 @@ $app->singleton('session.store', function () use ($app) {
 });
 
 class_alias(Illuminate\Support\Facades\Session::class, 'Session');
+class_alias(Illuminate\Support\Facades\Request::class, 'Request');
 
 /*
 |--------------------------------------------------------------------------
