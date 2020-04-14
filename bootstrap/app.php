@@ -123,6 +123,8 @@ $app->middleware([
     App\Http\Middleware\VerifyCsrfToken::class,
 ]);
 
+class_alias(Illuminate\Support\Facades\Cookie::class, 'Cookie');
+
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
