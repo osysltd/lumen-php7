@@ -54,7 +54,7 @@ class VerifyCsrfToken
     public function handle($request, Closure $next)
     {
         if ($this->isReading($request) || $this->tokensMatch($request)) {
-            // Skip refreshing token for the URIs that should be excluded from CSRF verification.
+            // Skip refreshing token for the URIs that should be excluded from CSRF token refreshment.
             if (!$this->inExceptArray($request)) {
                 $request->session()->regenerateToken();
             }
@@ -125,7 +125,7 @@ class VerifyCsrfToken
      * @return bool
      */
     protected function isReading($request)
-    {
-        return in_array($request->method(), ['HEAD', 'GET', 'OPTIONS']);
+    {   // Perform CSRF token check for the non-refreshed requests.
+        return in_array($request->method(), ['HEAD', 'GET', 'OPTIONS']) || $this->inExceptArray($request);
     }
 }
