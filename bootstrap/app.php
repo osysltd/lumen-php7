@@ -87,6 +87,7 @@ $app->routeMiddleware([
 |--------------------------------------------------------------------------
 | Session Support
 | composer require illuminate/session[:version]
+| TODO: enable Session Encryption in config/session.php
 |--------------------------------------------------------------------------
 */
 
@@ -109,6 +110,7 @@ class_alias(Illuminate\Support\Facades\Request::class, 'Request');
 /*
 |--------------------------------------------------------------------------
 | Cookies and CSRF Support
+| composer require illuminate/cookie[:version]
 | CSRF: <input type="hidden" name="_token" value="{{ Session::token() }}" />
 |--------------------------------------------------------------------------
 */
