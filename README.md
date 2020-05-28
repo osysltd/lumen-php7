@@ -19,6 +19,25 @@ Thank you for considering contributing to Lumen! The contribution guide can be f
 
 If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
+## Deployment
+
+```sh
+git config credential.helper store
+sudo git clone https://github.com/osysltd/lumen/ .
+git pull origin master
+cp .env.example .env
+```
+In case of PHP Fatal error:  Allowed memory size of bytes exhausted (tried to allocate bytes) in phar:///usr/local/bin/composer/src/Composer/Cache.php on line 99
+
+```sh
+php -d memory_limit=-1 /usr/local/bin/composer install
+```
+
+```sh
+composer install
+composer dump-autoload --optimize
+```
+
 ## License
 
 The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
