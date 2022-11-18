@@ -21,6 +21,13 @@ Thank you for considering contributing to Lumen! The contribution guide can be f
 
 If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
+## Software development under Windows
+* [PHP](https://windows.php.net/download/) 7.4 VC15 x64 Non Thread Safe. Extract zip and add your PHP runtime directory to your Windows PATH environment variable by using  `sysdm.cpl` or `setx /M path "%path%;C:\php\"`
+* [Composer](https://getcomposer.org/download/) Latest Windows Installer
+* [TortoiseGit](https://tortoisegit.org/download/) Installer for Windows PC 
+* [Visual Studio Code](https://code.visualstudio.com/download) for Windows System Installer and [PHP Tools](https://marketplace.visualstudio.com/items?itemName=DEVSENSE.phptools-vscode) for VS Code extension
+* Optional [HeidiSQL](https://www.heidisql.com/download.php)
+
 ## Deployment
 
 ```sh
@@ -28,16 +35,13 @@ git config credential.helper store
 sudo git clone https://github.com/osysltd/lumen/ .
 git pull origin master
 cp .env.example .env
-```
-In case of PHP Fatal error:  Allowed memory size of bytes exhausted (tried to allocate bytes) in phar:///usr/local/bin/composer/src/Composer/Cache.php on line 99
-
-```sh
-php -d memory_limit=-1 /usr/local/bin/composer install
-```
-
-```sh
 composer install
 composer dump-autoload --optimize
+```
+
+In case of `PHP Fatal error:  Allowed memory size of bytes exhausted (tried to allocate bytes)`
+```sh
+php -d memory_limit=-1 /usr/local/bin/composer install
 ```
 
 ## License
