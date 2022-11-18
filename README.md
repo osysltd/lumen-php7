@@ -22,6 +22,7 @@ Thank you for considering contributing to Lumen! The contribution guide can be f
 If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
 ## Software development under Windows
+
 * [PHP](https://windows.php.net/download/) 7.4 VC15 x64 Non Thread Safe. Extract zip and add your PHP runtime directory to your Windows PATH environment variable by using  `sysdm.cpl` or `setx /M path "%path%;C:\php\"`
 * [Composer](https://getcomposer.org/download/) Latest Windows Installer
 * [TortoiseGit](https://tortoisegit.org/download/) Installer for Windows PC 
